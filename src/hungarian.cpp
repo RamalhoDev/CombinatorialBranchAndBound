@@ -25,17 +25,6 @@
 
 #include "../include/hungarian.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#define INF (0x7FFFFFFF)
-#define verbose (0)
-
-#define hungarian_test_alloc(X)                                                                                             \
-	do {                                                                                                                    \
-		if ((void*)(X) == NULL) fprintf(stderr, "Out of memory in %s, (%s, line %d).\n", __FUNCTION__, __FILE__, __LINE__); \
-	} while (0)
-
 void hungarian_print_matrix(int** C, int rows, int cols) {
 	int i, j;
 	fprintf(stderr, "\n");
@@ -63,7 +52,7 @@ void hungarian_print_status(hungarian_problem_t* p) {
 
 int hungarian_imax(int a, int b) { return (a < b) ? b : a; }
 
-int hungarian_init(hungarian_problem_t* p, double** cost_matrix, int rows, int cols, int mode) {
+int hungarian_init(hungarian_problem_t* p, vector<vector<double>>* cost_matrix, int rows, int cols, int mode) {
 	int i, j, org_cols, org_rows;
 	int max_cost;
 	max_cost = 0;
@@ -90,7 +79,7 @@ int hungarian_init(hungarian_problem_t* p, double** cost_matrix, int rows, int c
 		p->assignment[i] = (int*)calloc(cols, sizeof(int));
 		hungarian_test_alloc(p->assignment[i]);
 		for (j = 0; j < p->num_cols; j++) {
-			p->cost[i][j] = (i < org_rows && j < org_cols) ? cost_matrix[i][j] : 0;
+			p->cost[i][j] = (i < org_rows && j < org_cols) ? cost_matrix->at(i)[j] : 0;
 			p->assignment[i][j] = 0;
 
 			if (max_cost < p->cost[i][j]) max_cost = p->cost[i][j];

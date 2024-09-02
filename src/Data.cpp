@@ -19,6 +19,11 @@ Data::Data(int qtParam, char *instance) {
 	explicitCoord = false;
 }
 
+Data::Data(Data *data) {
+	this->distMatrix = *data->getMatrixCost();
+	this->dimension = data->getDimension();
+}
+
 Data::~Data() {}
 
 void Data::read() {
@@ -50,7 +55,7 @@ void Data::read() {
 	yCoord = vector<double>(dimension);  // coord y
 
 	// Alocar matriz 2D
-	distMatrix = vector<vector<double>>(dimension, vector<double>(dimension));  // memoria dinâmica (matrix 2D)
+	distMatrix = vector<vector<double>>(dimension, vector<double>(dimension, INFINITE));  // memoria dinâmica (matrix 2D)
 
 	if (typeProblem == "EXPLICIT") {
 		while (file.compare("EDGE_WEIGHT_FORMAT:") != 0 && file.compare("EDGE_WEIGHT_FORMAT") != 0) {
@@ -440,8 +445,8 @@ string Data::getInstanceName() {  // Get the name of instance
 }
 
 void Data::printMatrixDist() {
-	for (int i = 1; i <= getDimension(); i++) {
-		for (int j = 1; j <= getDimension(); j++) {
+	for (int i = 0; i < getDimension(); i++) {
+		for (int j = 0; j < getDimension(); j++) {
 			cout << getDistance(i, j) << " ";
 		}
 		cout << endl;

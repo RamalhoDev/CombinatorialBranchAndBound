@@ -1,7 +1,7 @@
 #ifndef DATA_H
 #define DATA_H
 
-#define INFINITE 0
+#define INFINITE 99999999
 
 #include <math.h>
 
@@ -14,16 +14,16 @@ using namespace std;
 class Data {
    public:
 	Data(int, char *);
+	Data(Data *data);
 	~Data();
 
 	void read();
 	void printMatrixDist();
 	inline int getDimension() { return dimension; };
-	inline double getDistance(int i, int j) { return distMatrix[i - 1][j - 1]; };
+	inline double getDistance(int i, int j) { return distMatrix[i][j]; };
 	inline vector<vector<double>> *getMatrixCost() { return &distMatrix; }
-	inline double getXCoord(int i) { return xCoord[i - 1]; }
-	inline double getYCoord(int i) { return yCoord[i - 1]; }
 	inline bool getExplicitCoord() { return explicitCoord; };
+	void forbidArc(int i, int j) { this->distMatrix[i][j] = INFINITE; }
 
 	string getInstanceName();  // Get instance's name
 
