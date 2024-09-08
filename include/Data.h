@@ -21,7 +21,9 @@ class Data {
 	void printMatrixDist();
 	inline int getDimension() { return dimension; };
 	inline double getDistance(int i, int j) { return distMatrix[i][j]; };
-	inline vector<vector<double>> *getMatrixCost() { return &distMatrix; }
+
+	inline vector<vector<double>> getMatrixCost() { return distMatrix; }
+	inline vector<vector<double>> *getMatrixCostPointer() { return &distMatrix; }
 	inline bool getExplicitCoord() { return explicitCoord; };
 	void forbidArc(int i, int j) { this->distMatrix[i][j] = INFINITE; }
 

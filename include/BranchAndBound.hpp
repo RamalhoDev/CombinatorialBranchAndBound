@@ -13,10 +13,11 @@ using namespace std;
 
 class BranchAndBound {
 	Data* data;
+	shared_ptr<RelaxationSolver> solver;
 
    public:
-	BranchAndBound(Data* data);
-	vector<int> solve(bool useDFS = true);
+	BranchAndBound(Data* data, shared_ptr<RelaxationSolver> solver);
+	shared_ptr<vector<int>> solve(bool useDFS = true);
 };
 
 #endif  // !BRANCHANDBOUND_H

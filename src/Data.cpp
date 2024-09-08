@@ -20,7 +20,7 @@ Data::Data(int qtParam, char *instance) {
 }
 
 Data::Data(Data *data) {
-	this->distMatrix = *data->getMatrixCost();
+	this->distMatrix = data->getMatrixCost();
 	this->dimension = data->getDimension();
 }
 

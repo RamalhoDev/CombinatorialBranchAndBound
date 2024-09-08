@@ -1,14 +1,17 @@
 #include "../include/BranchAndBound.hpp"
 
-BranchAndBound::BranchAndBound(Data* data) { this->data = data; }
+BranchAndBound::BranchAndBound(Data* data, shared_ptr<RelaxationSolver> solver) {
+	this->data = data;
+	this->solver = solver;
+}
 
-vector<int> BranchAndBound::solve(bool useDFS) {
-	vector<int> solution;
+shared_ptr<vector<int>> BranchAndBound::solve(bool useDFS) {
+	shared_ptr<vector<int>> solution;
 
 	double upperBound = INFINITE;
 	auto tree = list<Node>();
 
-	auto root = Node(data, {});
+	auto root = Node(data, this->solver, {});
 	tree.push_back(root);
 	int count = 0;
 	while (!tree.empty()) {
@@ -29,7 +32,7 @@ vector<int> BranchAndBound::solve(bool useDFS) {
 			} else {
 				// cout << "Entrei atualizando UB Custo: " << currNode.getLowerBound() << " UpperBound: " << upperBound << " \n";
 				upperBound = min(upperBound, currNode.getLowerBound());
-				solution = currNode.getSubtour(0);
+				solution = currNode.getSolution();
 			}
 		}
 

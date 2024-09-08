@@ -16,8 +16,10 @@ target_link_libraries(${this} PUBLIC
   BranchAndBound
   Data
   Node
+  CR
   Hungarian
-)
+  Kruskal
+  )
 
 target_include_directories(${this} PUBLIC
   ${CMAKE_SOURCE_DIR}/include/models/
