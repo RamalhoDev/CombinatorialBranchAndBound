@@ -1,9 +1,9 @@
 #include "../include/Kruskal.h"
 
-Kruskal::Kruskal(vvi *dist) {
+Kruskal::Kruskal(vvi *dist, vector<int> * lambda) {
 	for (int i = 1; i < dist->size(); ++i) {
 		for (int j = 1; j < dist->at(i).size(); ++j) {
-			graph.push(make_pair(-dist->at(i)[j], make_pair(i, j)));
+			graph.push(make_pair(-dist->at(i)[j] + lambda->at(i) + lambda->at(j), make_pair(i, j)));
 		}
 	}
 }

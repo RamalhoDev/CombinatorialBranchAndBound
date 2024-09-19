@@ -10,16 +10,15 @@
 
 class Subgradient : public RelaxationSolver {
 	int kMax;
-	shared_ptr<Kruskal> kruskal;
 	shared_ptr<SubgradientSolution> bestSolution;
-	shared_ptr<SubgradientSolution> getOneTree(int dimension);
+	shared_ptr<SubgradientSolution> getOneTree(Data * data, shared_ptr<Kruskal> kruskal, vector<int> * lambda);
 
    public:
 	Subgradient(int kMax) { this->kMax = kMax; }
 
 	double solve(Data* data);
 	shared_ptr<vector<pair<int, int>>> getForbiddenArcs();
-	shared_ptr<vector<int>> getSolution() { return; }
+	shared_ptr<vector<pair<int,int>>> getSolution() { return make_shared<vector<pair<int,int>>>(bestSolution->getEdges()); }
 };
 
 #endif  // !SUBGRADIENT_H

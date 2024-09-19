@@ -7,7 +7,7 @@ int main(int argn, char** argv) {
 	Data* data = new Data(argn, argv[1]);
 	data->read();
 	// auto solver = make_shared<CombinatorialRelaxation>();
-	auto solver = make_shared<Subgradient>(10, 10);
+	auto solver = make_shared<Subgradient>(10);
 	solver->solve(data);
 	// BranchAndBound bb = BranchAndBound(data, solver);
 	// auto solution = bb.solve();

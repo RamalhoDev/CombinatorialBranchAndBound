@@ -18,7 +18,13 @@ class CombinatorialRelaxation : public RelaxationSolver {
 	CombinatorialRelaxation();
 	double solve(Data* data);
 	shared_ptr<vector<pair<int, int>>> getForbiddenArcs();
-	shared_ptr<vector<int>> getSolution() { return solution; };
+	shared_ptr<vector<pair<int,int>>> getSolution() { 
+		auto edges = make_shared<vector<pair<int,int>>>();
+		for (size_t i = 1; i < solution->size(); i++){
+			edges->push_back(make_pair(solution->at(i-1), solution->at(i)));
+		}
+		return edges;
+	 }
 };
 
 #endif  // !COMBINATORIALRELAXATION_HPP

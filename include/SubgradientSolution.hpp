@@ -15,6 +15,7 @@ class SubgradientSolution {
    public:
 	SubgradientSolution(double lb, vector<pair<int, int>> edges, int dimension);
 	shared_ptr<vector<pair<int, int>>> getForbiddenArcs();
+	vector<pair<int,int>> getEdges() {return edges;}
 	double getLowerBound() { return lb; }
 };
 

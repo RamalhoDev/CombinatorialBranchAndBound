@@ -17,7 +17,7 @@ class BranchAndBound {
 
    public:
 	BranchAndBound(Data* data, shared_ptr<RelaxationSolver> solver);
-	shared_ptr<vector<int>> solve(bool useDFS = true);
+	shared_ptr<vector<pair<int,int>>> solve(bool useDFS = true);
 };
 
 #endif  // !BRANCHANDBOUND_H

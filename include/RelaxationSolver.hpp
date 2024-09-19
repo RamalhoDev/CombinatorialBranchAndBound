@@ -16,7 +16,7 @@ class RelaxationSolver {
 	RelaxationSolver() {}
 	virtual double solve(Data* data) {}
 	virtual shared_ptr<vector<pair<int, int>>> getForbiddenArcs() {}
-	virtual shared_ptr<vector<int>> getSolution() {}
+	virtual shared_ptr<vector<pair<int,int>>> getSolution() {}
 	virtual ~RelaxationSolver() {}
 };
 

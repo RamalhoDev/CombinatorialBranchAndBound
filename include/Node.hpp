@@ -27,7 +27,7 @@ class Node {
 	vector<Node> getSubProblems();
 	bool getIsFeasible() { return isFeasible; }
 	double getLowerBound() { return lowerBound; }
-	shared_ptr<vector<int>> getSolution() { return solver->getSolution(); }
+	shared_ptr<vector<pair<int,int>>> getSolution() { return solver->getSolution(); }
 	void printSubProblems() {
 		for (auto&& forbArc : forbiddenArcs) {
 			cout << "(" << forbArc.first << "," << forbArc.second << "),";
