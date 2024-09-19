@@ -18,6 +18,8 @@ target_link_libraries(${this} PUBLIC
   Node
   CR
   Hungarian
+  Subgradient
+  SubgradientSolution
   Kruskal
   )
 

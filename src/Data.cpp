@@ -380,6 +380,15 @@ void Data::read() {
 	else if (typeProblem == "SPECIAL") {
 		cout << "SPECIAL - Nao suportado!" << endl;
 	}
+
+	firstClosest = -1;
+	secondClosest = -1;
+	auto costDepot = distMatrix[0];
+	auto indexCostDepot = vector<int>(distMatrix.size());
+	iota(indexCostDepot.begin(), indexCostDepot.end(), 0);
+	sort(indexCostDepot.begin(), indexCostDepot.end(), [costDepot](const int &a, int &b) { return costDepot[a] < costDepot[b]; });
+	firstClosest = indexCostDepot[0];
+	secondClosest = indexCostDepot[1];
 }
 
 double Data::CalcDistEuc(vector<double> *X, vector<double> *Y, int I, int J) {

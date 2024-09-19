@@ -5,8 +5,10 @@
 
 #include <math.h>
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <numeric>
 #include <string>
 #include <vector>
 using namespace std;
@@ -26,12 +28,16 @@ class Data {
 	inline vector<vector<double>> *getMatrixCostPointer() { return &distMatrix; }
 	inline bool getExplicitCoord() { return explicitCoord; };
 	void forbidArc(int i, int j) { this->distMatrix[i][j] = INFINITE; }
+	int getFirstClosest() { return firstClosest; }
+	int getSecondClosest() { return secondClosest; }
 
 	string getInstanceName();  // Get instance's name
 
    private:
 	string instaceName;
 
+	int firstClosest;
+	int secondClosest;
 	int dimension;
 
 	vector<vector<double>> distMatrix;
