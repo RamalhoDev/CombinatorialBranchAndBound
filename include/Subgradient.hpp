@@ -13,7 +13,7 @@ class Subgradient : public RelaxationSolver {
 	double ub;
 	shared_ptr<SubgradientSolution> bestSolution;
 	shared_ptr<SubgradientSolution> getOneTree(Data* data, shared_ptr<Kruskal> kruskal, shared_ptr<vector<double>> lambda);
-	void updateLambda(shared_ptr<vector<double>> lambda, double u, vector<double> penalizer);
+	void updateLambda(shared_ptr<vector<double>> lambda, double u, vector<int> penalizer);
 	shared_ptr<vector<double>> bestLambdas;
 
    public:

@@ -6,8 +6,12 @@ Node::Node(Data *data, shared_ptr<RelaxationSolver> solver, vector<pair<int, int
 	this->forbiddenArcs = forbiddenArcs;
 	this->lowerBound = lowerBound;
 	for (pair<int, int> arc : forbiddenArcs) {
-		this->data.forbidArc(arc.first, arc.second);
+		// if (!arc.second)
+		// 	this->data.forbidArc(arc.second, arc.first);
+		// else
+		// 	this->data.forbidArc(arc.first, arc.second);
 		this->data.forbidArc(arc.second, arc.first);
+		this->data.forbidArc(arc.first, arc.second);
 	}
 	this->data.updateClosest();
 	this->isFeasible = false;

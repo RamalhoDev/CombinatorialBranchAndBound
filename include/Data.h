@@ -17,6 +17,14 @@ class Data {
    public:
 	Data(int, char *);
 	Data(Data *data);
+	Data() {
+		distMatrix = {{INFINITE, 30, 26, 50, 40},
+		              {30, INFINITE, 24, 40, 50},
+		              {26, 24, INFINITE, 24, 26},
+		              {50, 40, 24, INFINITE, 30},
+		              {40, 50, 26, 30, INFINITE}};
+		dimension = 5;
+	}
 	~Data();
 
 	void read();
