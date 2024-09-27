@@ -24,6 +24,15 @@ Data::Data(Data *data) {
 	this->dimension = data->getDimension();
 }
 
+void Data::updateClosest() {
+	auto indexCostDepot = vector<int>(dimension);
+	iota(indexCostDepot.begin(), indexCostDepot.end(), 0);
+	sort(indexCostDepot.begin(), indexCostDepot.end(), [this](const int &a, int &b) { return getDistance(0, a) < getDistance(0, b); });
+	this->firstClosest = indexCostDepot[0];
+	sort(indexCostDepot.begin(), indexCostDepot.end(), [this](const int &a, int &b) { return getDistance(0, a) < getDistance(0, b); });
+	this->secondClosest = indexCostDepot[1];
+}
+
 Data::~Data() {}
 
 void Data::read() {

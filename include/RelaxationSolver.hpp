@@ -14,9 +14,10 @@ class RelaxationSolver {
 
    public:
 	RelaxationSolver() {}
-	virtual double solve(Data* data) {}
+	virtual double solve(Data* data, shared_ptr<vector<double>> lambda) {}
 	virtual shared_ptr<vector<pair<int, int>>> getForbiddenArcs() {}
-	virtual shared_ptr<vector<pair<int,int>>> getSolution() {}
+	virtual shared_ptr<vector<pair<int, int>>> getSolution() {}
+	virtual shared_ptr<vector<double>> getLambdas() { return make_shared<vector<double>>(); }
 	virtual ~RelaxationSolver() {}
 };
 

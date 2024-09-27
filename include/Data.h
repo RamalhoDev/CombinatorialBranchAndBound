@@ -30,6 +30,7 @@ class Data {
 	void forbidArc(int i, int j) { this->distMatrix[i][j] = INFINITE; }
 	int getFirstClosest() { return firstClosest; }
 	int getSecondClosest() { return secondClosest; }
+	void updateClosest();
 
 	string getInstanceName();  // Get instance's name
 

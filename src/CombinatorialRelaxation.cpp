@@ -2,7 +2,7 @@
 
 CombinatorialRelaxation::CombinatorialRelaxation() {}
 
-double CombinatorialRelaxation::solve(Data *data) {
+double CombinatorialRelaxation::solve(Data *data, shared_ptr<vector<double>> lambda) {
 	auto ap = hungarian_problem_t();
 	hungarian_init(&ap, data->getMatrixCostPointer(), data->getDimension(), data->getDimension(), HUNGARIAN_MODE_MINIMIZE_COST);
 	auto lb = hungarian_solve(&ap);

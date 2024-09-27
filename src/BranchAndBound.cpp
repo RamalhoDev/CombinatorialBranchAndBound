@@ -5,8 +5,8 @@ BranchAndBound::BranchAndBound(Data* data, shared_ptr<RelaxationSolver> solver) 
 	this->solver = solver;
 }
 
-shared_ptr<vector<pair<int,int>>> BranchAndBound::solve(bool useDFS) {
-	shared_ptr<vector<pair<int,int>>> solution;
+shared_ptr<vector<pair<int, int>>> BranchAndBound::solve(bool useDFS) {
+	shared_ptr<vector<pair<int, int>>> solution;
 
 	double upperBound = INFINITE;
 	auto tree = list<Node>();
@@ -35,9 +35,6 @@ shared_ptr<vector<pair<int,int>>> BranchAndBound::solve(bool useDFS) {
 				solution = currNode.getSolution();
 			}
 		}
-
-		// cout << tree.size() << "\n";
-		// count++;
 	}
 
 	return solution;

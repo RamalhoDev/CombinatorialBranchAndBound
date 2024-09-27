@@ -3,6 +3,7 @@
 
 #include <cstdio>
 #include <iostream>
+#include <memory>
 #include <queue>
 #include <utility>
 #include <vector>
@@ -10,18 +11,18 @@
 using namespace std;
 
 typedef pair<int, int> ii;
-typedef vector<vector<double> > vvi;
+typedef vector<vector<double>> vvi;
 typedef vector<ii> vii;
 
 class Kruskal {
    public:
-	Kruskal(vvi *dist,  vector<int> * lambda);
+	Kruskal(vvi *dist, shared_ptr<vector<double>> lambda);
 
 	double MST(int nodes);
 	vii getEdges();
 
    private:
-	priority_queue<pair<double, ii> > graph;
+	priority_queue<pair<double, ii>> graph;
 	vector<int> pset;
 	vii edges;
 

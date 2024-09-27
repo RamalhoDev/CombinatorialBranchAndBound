@@ -17,17 +17,18 @@ class Node {
 	vector<pair<int, int>> forbiddenArcs;
 	Data data;
 	shared_ptr<RelaxationSolver> solver;
-
+	shared_ptr<vector<double>> bestLambdas;
 	bool isFeasible;
 
    public:
-	Node(Data* data, shared_ptr<RelaxationSolver> solver, vector<pair<int, int>> forbiddenArcs, double lowerBound = 0);
+	Node(Data* data, shared_ptr<RelaxationSolver> solver, vector<pair<int, int>> forbiddenArcs, double lowerBound = 0,
+	     shared_ptr<vector<double>> lambda = NULL);
 	~Node();
 	void solve();
 	vector<Node> getSubProblems();
 	bool getIsFeasible() { return isFeasible; }
 	double getLowerBound() { return lowerBound; }
-	shared_ptr<vector<pair<int,int>>> getSolution() { return solver->getSolution(); }
+	shared_ptr<vector<pair<int, int>>> getSolution() { return solver->getSolution(); }
 	void printSubProblems() {
 		for (auto&& forbArc : forbiddenArcs) {
 			cout << "(" << forbArc.first << "," << forbArc.second << "),";
