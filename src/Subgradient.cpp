@@ -10,7 +10,11 @@ double Subgradient::solve(Data *data, shared_ptr<vector<double>> previousLambdas
 		auto solution = getOneTree(data, kruskal, lambda);
 		double cost = solution->getLowerBound();
 
-		if (cost > bestCost) {
+		if (solution->isSolutionFeasible(lambda) && !bestSolution->isSolutionFeasible(bestLambdas)) {
+			ub = cost;
+		}
+
+		if (cost > bestCost || solution->isSolutionFeasible(lambda) && !bestSolution->isSolutionFeasible(bestLambdas)) {
 			bestCost = cost;
 			bestSolution = solution;
 			bestLambdas = lambda;
@@ -23,14 +27,14 @@ double Subgradient::solve(Data *data, shared_ptr<vector<double>> previousLambdas
 			}
 		}
 
+		// cout << (solution->isSolutionFeasible(lambda)) << "\n";
 		auto penalizer = solution->getPenalizer();
 		double u = e * (ub - cost) / solution->getPenalizerCost();
 		updateLambda(lambda, u, penalizer);
-		for (size_t i = 0; i < lambda->size(); i++) {
-			cout << lambda->at(i) << " ";
-		}
-		cout << "\n";
-
+		// for (size_t i = 0; i < lambda->size(); i++) {
+		// 	cout << lambda->at(i) << " ";
+		// }
+		// cout << "\n";
 		if (e < 0.000001 || cost > ub || (solution->isSolutionFeasible(lambda))) break;
 	}
 
@@ -51,14 +55,30 @@ shared_ptr<SubgradientSolution> Subgradient::getOneTree(Data *data, shared_ptr<K
 
 	// get solution edges
 	auto solutionEdges = kruskal->getEdges();
-	solutionEdges.push_back(make_pair(0, data->getFirstClosest()));
-	solutionEdges.push_back(make_pair(data->getSecondClosest(), 0));
+	bool feasible = true;
+	vector<vector<pair<int, int>>> adjacencyList = vector<vector<pair<int, int>>>(data->getDimension(), vector<pair<int, int>>());
+	for (size_t i = 0; i < solutionEdges.size(); i++) {
+		adjacencyList[solutionEdges[i].first].push_back(solutionEdges[i]);
+		adjacencyList[solutionEdges[i].second].push_back(solutionEdges[i]);
+		if ((adjacencyList[solutionEdges[i].first].size() > 2) || (adjacencyList[solutionEdges[i].second].size() > 2)) feasible = false;
+	}
+
+	auto indexCostDepot = vector<int>(dimension);
+	iota(indexCostDepot.begin(), indexCostDepot.end(), 0);
+	sort(indexCostDepot.begin(), indexCostDepot.end(),
+	     [data, lambda](const int &a, int &b) { return data->getDistance(0, a) - lambda->at(a) < data->getDistance(0, b) - lambda->at(b); });
+	int firstClosest = indexCostDepot[0];
+	int secondClosest = indexCostDepot[1];
+	// sort(indexCostDepot.begin(), indexCostDepot.end(), [this](const int &a, int &b) { return getDistance(0, a) < getDistance(0, b); });
+
+	solutionEdges.push_back(make_pair(0, firstClosest));
+	solutionEdges.push_back(make_pair(secondClosest, 0));
 
 	return make_shared<SubgradientSolution>(lb, solutionEdges, dimension);
 }
 
 void Subgradient::updateLambda(shared_ptr<vector<double>> lambda, double u, vector<int> penalizer) {
 	for (size_t i = 0; i < lambda->size(); i++) {
-		lambda->at(i) = lambda->at(i) + u * penalizer[i];
+		lambda->at(i) += u * penalizer[i];
 	}
 }

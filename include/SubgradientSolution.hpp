@@ -1,6 +1,7 @@
 #ifndef SUBGRADIENTSOLUTION_HPP
 #define SUBGRADIENTSOLUTION_HPP
 
+#include <iostream>
 #include <memory>
 #include <vector>
 using namespace std;
@@ -21,7 +22,7 @@ class SubgradientSolution {
 	double getLowerBound() { return lb; }
 	vector<int> getPenalizer() { return penalizer; }
 	bool isSolutionFeasible(shared_ptr<vector<double>> lambda);
-	int getPenalizerCost() { return penalizerCost; }
+	int getPenalizerCost() { return (penalizerCost == 0) ? 1 : penalizerCost; }
 };
 
 #endif  // !SUBGRADIENTSOLUTION_HPP

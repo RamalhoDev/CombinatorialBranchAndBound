@@ -14,6 +14,7 @@ SubgradientSolution::SubgradientSolution(double lb, vector<pair<int, int>> edges
 	}
 
 	int degree = adjacencyList[1].size();
+	higherDegreeVertex = 1;
 	for (size_t i = 2; i < adjacencyList.size(); i++) {
 		if (adjacencyList[i].size() > degree) {
 			degree = adjacencyList[i].size();
@@ -33,10 +34,12 @@ SubgradientSolution::SubgradientSolution(double lb, vector<pair<int, int>> edges
 
 shared_ptr<vector<pair<int, int>>> SubgradientSolution::getForbiddenArcs() {
 	auto forbiddenArcs = make_shared<vector<pair<int, int>>>();
-	for (auto edge : adjacencyList[higherDegreeVertex]) {
-		// if (!edge.first || !edge.second) continue;
-		forbiddenArcs->push_back(edge);
-		// forbiddenArcs->push_back(make_pair(edge.second, edge.first));
+	if (!feasible) {
+		for (auto edge : adjacencyList[higherDegreeVertex]) {
+			// if (!edge.first || !edge.second) continue;
+			forbiddenArcs->push_back(edge);
+			// forbiddenArcs->push_back(make_pair(edge.second, edge.first));
+		}
 	}
 	return forbiddenArcs;
 }
@@ -44,10 +47,12 @@ shared_ptr<vector<pair<int, int>>> SubgradientSolution::getForbiddenArcs() {
 bool SubgradientSolution::isSolutionFeasible(shared_ptr<vector<double>> lambda) {
 	if (feasible) {
 		for (size_t i = 0; i < adjacencyList.size(); i++) {
-			if (lambda->at(i) * (2 - adjacencyList[i].size()) != 0.0000001) {
+			cout << lambda->at(i) * (2 - adjacencyList[i].size()) << " ";
+			if (lambda->at(i) * (2 - adjacencyList[i].size()) != 0) {
 				return false;
 			}
 		}
 	}
+
 	return feasible;
 }
